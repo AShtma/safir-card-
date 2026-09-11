@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بطاقة سفير — المركز الاستكشافي بالمنوفية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<style>
+  :root{
+    --navy-mid:#142B4F; --navy-soft:#1E3A66;
+    --teal:#1FBFA8; --teal-dark:#128B7C;
+    --gold:#E8A33D; --gold-light:#F4C878;
+    --paper:#FBF9F3; --paper-alt:#F2EDE0;
+    --ink:#1C2430; --ink-soft:#6B7280; --line:#DCD3BC;
+    --danger:#C1443A; --danger-dark:#9A332B;
+    --pink:#F45CA6; --violet:#8E6CF0; --sky:#33B7F0;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Tajawal',sans-serif;color:var(--ink);min-height:100vh;padding:28px 16px;display:flex;justify-content:center;background:linear-gradient(120deg,#EAF9F6 0%,#FBF6EA 45%,#F1F6FF 100%);overflow-x:hidden;}
+  .passport{position:relative;z-index:1;width:100%;max-width:980px;background:var(--paper);border-radius:22px;overflow:hidden;box-shadow:0 30px 70px rgba(20,43,79,0.18),0 0 0 1px rgba(255,255,255,0.5) inset;}
+  .zoom-note{text-align:center;font-size:12.5px;color:var(--navy-mid);background:var(--gold-light);padding:7px;}
+
+  /* ===== HERO ===== */
+  .hero{position:relative;background:linear-gradient(160deg,#FFFFFF 0%,#F7FAFF 55%,#EFF6FF 100%);padding:30px 30px 26px;border-bottom:5px solid transparent;border-image:linear-gradient(90deg,var(--gold),var(--teal),var(--gold)) 1;}
+
+  .hero-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    margin-bottom:26px;
+    padding:14px 18px;
+    background:linear-gradient(135deg,#F8FDFF,#F0F9FF);
+    border-radius:18px;
+    border:2px solid #D5EEF0;
+    flex-wrap:nowrap;
+  }
+  .brand-logos{display:flex;align-items:center;gap:12px;flex-shrink:0;}
+  .brand-logos img{
+    width:85px;height:85px;
+    border-radius:50%;
+    background:#fff;
+    padding:4px;
+    object-fit:cover;
+    box-shadow:0 5px 15px rgba(20,43,79,.18), 0 0 0 3px rgba(255,255,255,.9);
+    transition:transform .25s;
+  }
+  .brand-logos img:hover{transform:scale(1.08) rotate(-3deg);}
+
+  .hero-title-wrap{
+    flex:1;
+    text-align:center;
+    min-width:0;
+  }
+
+  /* ★★★ العنوان بتدرج لوني في الفورمة ★★★ */
+  .hero-title{
+    font-family:'Cairo',sans-serif;
+    font-weight:900;
+    font-size:clamp(24px,3.6vw,38px);
+    color:#fff;
+    display:inline-block;
+    padding:14px 40px;
+    border-radius:999px;
+    line-height:1.2;
+    background:linear-gradient(135deg, #0FA598 0%, #2196D6 50%, #7A4FE8 100%);
+    border:2px solid #fff;
+    box-shadow:0 8px 20px rgba(31,191,168,.4);
+    text-shadow:0 2px 6px rgba(0,0,0,.3);
+  }
+  .hero-title small{
+    display:block;
+    font-family:'Tajawal',sans-serif;
+    font-weight:500;
+    font-size:14px;
+    color:#fff;
+    margin-top:10px;
+    text-shadow:0 1px 3px rgba(0,0,0,.3);
+  }
+
+  .hero-body{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start;padding-top:6px;}
+
+  .photo-frame{flex:0 0 148px;width:148px;height:148px;border-radius:50%;padding:5px;background:conic-gradient(from 220deg,var(--gold),var(--gold-light),var(--teal),var(--gold));cursor:pointer;position:relative;transition:transform .25s;}
+  .photo-frame:hover{transform:scale(1.03) rotate(-1deg);}
+  .photo-inner{width:100%;height:100%;border-radius:50%;background:var(--navy-mid);border:3px solid #fff;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+  .photo-inner img{width:100%;height:100%;object-fit:cover;display:none;}
+  .photo-icon{font-size:34px;opacity:.8;}
+  .photo-text{font-size:11.5px;color:rgba(255,255,255,.7);text-align:center;padding:0 14px;margin-top:5px;}
+  .photo-frame input[type="file"]{display:none;}
+  .photo-frame .edit-badge{position:absolute;bottom:2px;left:2px;width:30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;border:3px solid var(--paper);}
+
+  .id-fields{flex:1;min-width:250px;display:flex;flex-direction:column;gap:14px;}
+  .id-field label{display:block;font-size:12.5px;color:var(--teal-dark);font-weight:700;margin-bottom:5px;}
+  .id-field input{width:100%;background:#fff;border:2px solid #E5E7EB;border-radius:10px;color:var(--ink);font-family:'Tajawal',sans-serif;font-size:15.5px;padding:10px 14px;outline:none;transition:.2s;}
+  .id-field input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(31,191,168,.15);}
+  .id-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;}
+
+  /* ===== PAGES ===== */
+  .pages{padding:8px 26px 26px;}
+  .page{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+  .page-stamp{display:inline-flex;align-items:center;gap:9px;margin:18px 0 0 20px;padding:8px 16px;border:2px dashed currentColor;border-radius:10px;font-family:'Cairo',sans-serif;font-weight:800;font-size:15.5px;transform:rotate(-1deg);}
+  .page-stamp.c-courses{color:var(--teal-dark);}
+  .page-stamp.c-achieve{color:var(--gold);background:#fffaf0;}
+  .page-stamp.c-journey{color:var(--navy-soft);}
+  .page-body{padding:16px 22px 22px;}
+
+  .chip-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .chip{display:flex;align-items:flex-start;gap:10px;background:var(--paper-alt);border:1px solid var(--line);border-radius:10px;padding:10px 12px;}
+  .chip:focus-within{border-color:var(--teal);box-shadow:0 0 0 3px rgba(31,191,168,.15);background:#fff;}
+  .chip .dot{flex-shrink:0;width:9px;height:9px;border-radius:50%;margin-top:9px;}
+  .chip-list.courses .dot{background:var(--teal);}
+  .chip-list.achievements .dot{background:var(--gold);}
+  .chip textarea{flex:1;border:none;background:transparent;resize:none;overflow:hidden;font-family:inherit;font-size:15px;line-height:1.6;color:var(--ink);min-height:26px;outline:none;}
+  .chip .remove-btn{background:transparent;border:none;color:#c3c9d1;font-size:17px;cursor:pointer;padding:2px 4px;}
+  .chip .remove-btn:hover{color:var(--danger);}
+
+  /* ★★★ زر إضافة كريستالي (تركواز) ★★★ */
+  .add-btn{
+    margin-top:14px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'Tajawal',sans-serif;
+    font-weight:700;
+    font-size:14px;
+    padding:10px 22px;
+    border-radius:999px;
+    cursor:pointer;
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+    background-color:#1FBFA8;
+    background-image:linear-gradient(135deg,
+      rgba(31,191,168,.95) 0%,
+      rgba(51,183,240,.85) 100%);
+    border:2px solid rgba(255,255,255,.7);
+    box-shadow:
+      0 8px 20px rgba(31,191,168,.35),
+      0 0 0 1px rgba(255,255,255,.3) inset,
+      0 1px 0 rgba(255,255,255,.8) inset;
+    text-shadow:0 1px 3px rgba(0,0,0,.3);
+    transition:transform .18s,box-shadow .18s;
+  }
+  .add-btn::before{
+    content:"";
+    position:absolute;
+    top:0;left:0;right:0;
+    height:50%;
+    background:linear-gradient(180deg,
+      rgba(255,255,255,.55) 0%,
+      rgba(255,255,255,.05) 100%);
+    border-radius:999px 999px 0 0;
+    pointer-events:none;
+  }
+  .add-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:
+      0 12px 26px rgba(31,191,168,.5),
+      0 0 0 1px rgba(255,255,255,.4) inset,
+      0 1px 0 rgba(255,255,255,.9) inset;
+  }
+  .add-btn > *{position:relative;z-index:1;}
+
+  /* ★★★ زر إضافة إنجاز كريستالي (ذهبي) ★★★ */
+  .add-btn.gold{
+    background-color:#E8A33D;
+    background-image:linear-gradient(135deg,
+      rgba(232,163,61,.95) 0%,
+      rgba(244,200,120,.9) 100%);
+    box-shadow:
+      0 8px 20px rgba(232,163,61,.4),
+      0 0 0 1px rgba(255,255,255,.3) inset,
+      0 1px 0 rgba(255,255,255,.8) inset;
+  }
+  .add-btn.gold:hover{
+    box-shadow:
+      0 12px 26px rgba(232,163,61,.55),
+      0 0 0 1px rgba(255,255,255,.4) inset,
+      0 1px 0 rgba(255,255,255,.9) inset;
+  }
+
+  /* JOURNEY TABLE */
+  .journey-table-wrap{width:100%;overflow-x:auto;border-radius:10px;border:2px solid #1FBFA8;background:#fff;}
+  .journey-table{width:100%;min-width:1100px;border-collapse:collapse;font-size:14px;}
+  .journey-table thead th{background:linear-gradient(135deg,#1FBFA8,#33B7F0);color:#fff;padding:12px 8px;font-family:'Cairo',sans-serif;font-weight:800;font-size:13.5px;text-align:center;border:1px solid #17a892;line-height:1.4;}
+  .journey-table tbody td{padding:6px;border:1px solid #d5e5f0;background:#fff;vertical-align:top;text-align:center;}
+  .journey-table tbody tr:nth-child(even) td{background:#f8fcff;}
+  .journey-table textarea{width:100%;border:1px solid #e5eef5;border-radius:8px;background:#fbfeff;padding:8px 10px;font-family:inherit;font-size:14px;line-height:1.5;color:var(--ink);resize:none;overflow:hidden;min-height:60px;outline:none;text-align:center;}
+  .journey-table textarea:focus{border-color:var(--teal);background:#fff;box-shadow:0 0 0 3px rgba(31,191,168,.15);}
+  .journey-table .row-num{font-family:'Cairo',sans-serif;font-weight:800;color:var(--teal-dark);font-size:16px;background:#e8f9f6 !important;vertical-align:middle !important;width:42px;}
+  .journey-table .remove-cell{width:44px;vertical-align:middle !important;}
+  .journey-table .remove-cell .remove-btn{background:transparent;border:none;color:#c3c9d1;font-size:18px;cursor:pointer;padding:6px;}
+  .journey-table .remove-cell .remove-btn:hover{color:var(--danger);background:#fee2e2;}
+
+  /* ACTION BAR */
+  .action-bar{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;padding:26px;background:linear-gradient(120deg,rgba(31,191,168,.08),rgba(232,163,61,.08));border-top:1px dashed var(--line);}
+
+  /* ★★★ الأزرار الكريستالية الرئيسية ★★★ */
+  .btn{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    font-family:'Tajawal',sans-serif;
+    font-weight:700;
+    font-size:14.5px;
+    padding:14px 30px;
+    border-radius:999px;
+    cursor:pointer;
+    color:#fff;
+    overflow:hidden;
+    border:2px solid rgba(255,255,255,.7);
+    text-shadow:0 1px 3px rgba(0,0,0,.3);
+    transition:transform .18s,box-shadow .18s;
+  }
+  .btn::before{
+    content:"";
+    position:absolute;
+    top:0;left:0;right:0;
+    height:50%;
+    background:linear-gradient(180deg,
+      rgba(255,255,255,.55) 0%,
+      rgba(255,255,255,.05) 100%);
+    border-radius:999px 999px 0 0;
+    pointer-events:none;
+  }
+  .btn::after{
+    content:"";
+    position:absolute;
+    top:0;bottom:0;
+    left:-60%;
+    width:40%;
+    background:linear-gradient(115deg,
+      transparent,
+      rgba(255,255,255,.7),
+      transparent);
+    transform:skewX(-20deg);
+    transition:left .55s ease;
+    pointer-events:none;
+  }
+  .btn:hover{transform:translateY(-3px);}
+  .btn:hover::after{left:130%;}
+  .btn > *{position:relative;z-index:1;}
+
+  /* زر معاينة (تركواز-أزرق) */
+  .btn-preview{
+    background-color:#1FBFA8;
+    background-image:linear-gradient(135deg,
+      rgba(31,191,168,.95) 0%,
+      rgba(51,183,240,.85) 100%);
+    box-shadow:
+      0 10px 24px rgba(31,191,168,.45),
+      0 0 0 1px rgba(255,255,255,.3) inset,
+      0 1px 0 rgba(255,255,255,.8) inset;
+  }
+  .btn-preview:hover{
+    box-shadow:
+      0 14px 30px rgba(31,191,168,.6),
+      0 0 0 1px rgba(255,255,255,.4) inset,
+      0 1px 0 rgba(255,255,255,.9) inset;
+  }
+
+  /* زر تصدير (ذهبي) */
+  .btn-export{
+    background-color:#E8A33D;
+    background-image:linear-gradient(135deg,
+      rgba(232,163,61,.95) 0%,
+      rgba(244,200,120,.9) 100%);
+    box-shadow:
+      0 10px 24px rgba(232,163,61,.45),
+      0 0 0 1px rgba(255,255,255,.3) inset,
+      0 1px 0 rgba(255,255,255,.8) inset;
+  }
+  .btn-export:hover{
+    box-shadow:
+      0 14px 30px rgba(232,163,61,.6),
+      0 0 0 1px rgba(255,255,255,.4) inset,
+      0 1px 0 rgba(255,255,255,.9) inset;
+  }
+
+  /* زر مسح (أحمر) */
+  .btn-clear{
+    background-color:#C1443A;
+    background-image:linear-gradient(135deg,
+      rgba(193,68,58,.95) 0%,
+      rgba(217,83,79,.85) 100%);
+    box-shadow:
+      0 10px 24px rgba(193,68,58,.4),
+      0 0 0 1px rgba(255,255,255,.3) inset,
+      0 1px 0 rgba(255,255,255,.8) inset;
+  }
+  .btn-clear:hover{
+    box-shadow:
+      0 14px 30px rgba(193,68,58,.55),
+      0 0 0 1px rgba(255,255,255,.4) inset,
+      0 1px 0 rgba(255,255,255,.9) inset;
+  }
+
+  /* MODAL */
+  .overlay{display:none;position:fixed;inset:0;background:rgba(20,43,79,.55);backdrop-filter:blur(4px);z-index:999;align-items:center;justify-content:center;padding:16px;}
+  .overlay.active{display:flex;animation:fadeIn .25s;}
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+  .modal{width:100%;max-width:900px;max-height:94vh;background:#fff;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 70px rgba(20,43,79,.35);}
+  .modal-head{background:linear-gradient(120deg,var(--teal),var(--sky),var(--violet));color:#fff;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;font-family:'Cairo',sans-serif;font-weight:800;font-size:18px;}
+  .modal-head button{background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.4);color:#fff;width:34px;height:34px;border-radius:50%;font-size:18px;cursor:pointer;transition:.2s;}
+  .modal-head button:hover{background:rgba(255,255,255,.38);transform:rotate(90deg);}
+  .modal-body{padding:22px;overflow:auto;background:#f7f9fc;}
+  .modal-foot{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:16px 20px;background:rgba(255,255,255,.6);border-top:1px solid var(--line);}
+
+  /* CONFIRM */
+  .confirm-box{width:100%;max-width:380px;background:var(--paper);border-radius:16px;padding:26px 24px;text-align:center;box-shadow:0 25px 50px rgba(0,0,0,.35);}
+  .confirm-icon{font-size:36px;margin-bottom:8px;}
+  .confirm-title{font-family:'Cairo',sans-serif;font-weight:800;font-size:19px;color:var(--navy-mid);margin-bottom:8px;}
+  .confirm-text{font-size:14px;color:var(--ink-soft);line-height:1.6;margin-bottom:18px;}
+  .confirm-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+
+  /* TOAST */
+  .toast{position:fixed;bottom:26px;left:50%;transform:translate(-50%,20px);background:var(--navy-mid);color:#fff;font-size:14px;font-weight:600;padding:12px 22px;border-radius:999px;box-shadow:0 10px 25px rgba(0,0,0,.3);opacity:0;pointer-events:none;transition:.25s;z-index:1200;}
+  .toast.show{opacity:1;transform:translate(-50%,0);}
+
+  /* PREVIEW */
+  #previewCaptureArea{background:#fff;border-radius:16px;padding:24px;box-shadow:0 4px 20px rgba(0,0,0,.06);}
+
+  .pc-logos{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    margin-bottom:14px;
+    padding:14px 18px;
+    background:linear-gradient(135deg,#F0FDFB,#EFF6FF);
+    border-radius:16px;
+    border:2px solid #D5EEF0;
+    flex-wrap:nowrap;
+  }
+  .pc-logos .brand-logos{display:flex;align-items:center;gap:12px;flex-shrink:0;}
+  .pc-logos .brand-logos img{
+    width:85px;height:85px;
+    border-radius:50%;
+    background:#fff;
+    padding:4px;
+    object-fit:cover;
+    box-shadow:0 5px 15px rgba(20,43,79,.18), 0 0 0 3px rgba(255,255,255,.9);
+    transition:transform .25s;
+  }
+  .pc-logos .brand-logos img:hover{transform:scale(1.08) rotate(-3deg);}
+
+  /* ★★★ العنوان بتدرج لوني في المعاينة (يظهر في التصدير) ★★★ */
+  .pc-logos .pc-title{
+    flex:1;
+    text-align:center;
+    font-family:'Cairo',sans-serif;
+    font-weight:900;
+    font-size:clamp(20px,2.6vw,28px);
+    color:#fff;
+    display:inline-block;
+    padding:14px 32px;
+    border-radius:999px;
+    line-height:1.2;
+    background:linear-gradient(135deg, #0FA598 0%, #2196D6 50%, #7A4FE8 100%);
+    border:2px solid #fff;
+    box-shadow:0 8px 20px rgba(31,191,168,.4);
+    text-shadow:0 2px 6px rgba(0,0,0,.3);
+  }
+  .pc-logos .pc-title small{
+    display:block;
+    font-family:'Tajawal',sans-serif;
+    font-weight:500;
+    font-size:13px;
+    color:#fff;
+    margin-top:8px;
+    text-shadow:0 1px 3px rgba(0,0,0,.3);
+  }
+
+  .pc-section{margin-top:16px;}
+  .pc-section-title{display:inline-block;background:linear-gradient(135deg,#1FBFA8,#33B7F0);color:#fff;font-family:'Cairo',sans-serif;font-weight:800;font-size:15px;padding:8px 22px;border-radius:999px;box-shadow:0 4px 12px rgba(31,191,168,.3);margin-bottom:12px;}
+  .pc-section.achieve .pc-section-title{background:linear-gradient(135deg,#E8A33D,#F4C878);color:#5a3c0a;}
+  .pc-section.journey .pc-section-title{background:linear-gradient(135deg,#8E6CF0,#F45CA6);}
+  .pc-id-card{display:flex;gap:22px;flex-wrap:wrap;background:linear-gradient(135deg,#F8FDFF,#F0F9FF);border:2px solid #D5EEF0;border-radius:14px;padding:18px;align-items:flex-start;}
+  .pc-photo{flex:0 0 130px;width:130px;height:130px;border-radius:50%;padding:4px;background:conic-gradient(from 220deg,#1FBFA8,#33B7F0,#8E6CF0,#E8A33D,#1FBFA8);display:flex;align-items:center;justify-content:center;}
+  .pc-photo-inner{width:100%;height:100%;border-radius:50%;overflow:hidden;background:#F2EDE0;display:flex;align-items:center;justify-content:center;border:3px solid #fff;}
+  .pc-photo img{width:100%;height:100%;object-fit:cover;}
+  .pc-photo .none{font-size:11px;color:var(--ink-soft);text-align:center;padding:6px;}
+  .pc-fields{flex:1;min-width:240px;}
+  .pc-row{display:flex;gap:10px;padding:9px 0;border-bottom:1px dashed #C8DDE8;font-size:15px;}
+  .pc-row:last-child{border-bottom:none;}
+  .pc-row b{min-width:130px;flex-shrink:0;color:var(--teal-dark);font-weight:700;}
+  .pc-row span{white-space:pre-wrap;word-break:break-word;color:var(--ink);}
+  .pc-list{background:#F8FDFF;border:1px solid #D5EEF0;border-radius:12px;padding:14px 18px;}
+  .pc-list-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px dashed #E0EEF5;font-size:14.5px;color:var(--ink);white-space:pre-wrap;word-break:break-word;line-height:1.6;}
+  .pc-list-item:last-child{border-bottom:none;}
+  .pc-list-item::before{content:"●";color:#1FBFA8;font-size:15px;flex-shrink:0;}
+  .pc-section.achieve .pc-list-item::before{color:#E8A33D;}
+  .pc-list-item.empty{color:#B0B8C1;font-style:italic;}
+  .pc-journey-table-wrap{width:100%;overflow-x:auto;border-radius:10px;border:2px solid #1FBFA8;background:#fff;}
+  .pc-journey-table{width:100%;min-width:1000px;border-collapse:collapse;font-size:13.5px;}
+  .pc-journey-table thead th{background:linear-gradient(135deg,#1FBFA8,#33B7F0);color:#fff;padding:11px 8px;font-family:'Cairo',sans-serif;font-weight:800;font-size:13px;text-align:center;border:1px solid #17a892;line-height:1.4;}
+  .pc-journey-table tbody td{padding:10px 8px;border:1px solid #d5e5f0;background:#fff;text-align:center;vertical-align:top;font-size:13.5px;color:var(--ink);line-height:1.5;word-break:break-word;white-space:pre-wrap;}
+  .pc-journey-table tbody tr:nth-child(even) td{background:#F8FCFF;}
+  .pc-footer{margin-top:22px;padding-top:14px;border-top:2px dashed #D5EEF0;text-align:center;font-size:12.5px;color:var(--ink-soft);}
+
+  @media (max-width:700px){
+    .id-grid{grid-template-columns:1fr;}
+    .hero-body{flex-direction:column;align-items:center;text-align:center;}
+    .id-fields{width:100%;}
+    .pages{padding:6px 14px 18px;}
+    .brand-logos img{width:58px;height:58px;}
+    .hero-title{font-size:18px;padding:10px 20px;}
+    .hero-title small{font-size:11px;margin-top:6px;}
+    .pc-logos{padding:10px 8px;gap:6px;}
+    .pc-logos .brand-logos{gap:5px;}
+    .pc-logos .brand-logos img{width:48px;height:48px;padding:2px;}
+    .pc-logos .pc-title{font-size:14px;padding:8px 12px;}
+    .pc-logos .pc-title small{font-size:10px;margin-top:4px;}
+    .pc-id-card{flex-direction:column;align-items:center;text-align:center;}
+    .pc-row{flex-direction:column;gap:3px;text-align:center;}
+    .pc-row b{min-width:auto;}
+  }
+</style>
+</head>
+<body>
+
+<div class="passport">
+  <div class="zoom-note">📱 للتكبير والقراءة بوضوح على الموبايل، جرّب التقريب بإصبعين (Pinch Zoom)</div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-top">
+      <div class="brand-logos">
+        <img src="imeage/ministry.png" alt="شعار وزارة التربية والتعليم" onerror="this.style.display='none'">
+        <img src="imeage/center.png" alt="شعار المركز الاستكشافي" onerror="this.style.display='none'">
+      </div>
+      <div class="hero-title-wrap">
+        <div class="hero-title">بطاقة سفير
+          <small>المركز الاستكشافي بالمنوفية</small>
+        </div>
+      </div>
+      <div class="brand-logos">
+        <img src="imeage/menoufia.png" alt="شعار إدارة المنوفية" onerror="this.style.display='none'">
+        <img src="imeage/directorate.png" alt="شعار مديرية التربية والتعليم" onerror="this.style.display='none'">
+      </div>
+    </div>
+
+    <div class="hero-body">
+      <div class="photo-frame" onclick="document.getElementById('photoInput').click()">
+        <div class="photo-inner">
+          <span class="photo-icon">🧭</span>
+          <span class="photo-text">اضغط لإضافة صورة السفير</span>
+          <img id="previewImg" alt="صورة السفير">
+        </div>
+        <span class="edit-badge">✎</span>
+        <input type="file" id="photoInput" accept="image/*" onchange="previewPhoto(event)">
+      </div>
+
+      <div class="id-fields">
+        <div class="id-field">
+          <label>الاسم</label>
+          <input type="text" id="f-name" placeholder="اكتب اسم السفير">
+        </div>
+        <div class="id-grid">
+          <div class="id-field"><label>المدرسة</label><input type="text" id="f-school" placeholder="اسم المدرسة"></div>
+          <div class="id-field"><label>الصف الدراسي</label><input type="text" id="f-grade" placeholder="الصف"></div>
+          <div class="id-field"><label>رقم الهاتف</label><input type="tel" id="f-phone" placeholder="رقم الهاتف"></div>
+          <div class="id-field"><label>البريد الإلكتروني</label><input type="email" id="f-email" placeholder="البريد الإلكتروني"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGES -->
+  <div class="pages">
+
+    <!-- Courses -->
+    <div class="page">
+      <div class="page-stamp c-courses">🎓 الدورات الحاصل عليها</div>
+      <div class="page-body">
+        <ul class="chip-list courses" id="coursesList">
+          <li class="chip">
+            <span class="dot"></span>
+            <textarea rows="1" placeholder="اكتب اسم الدورة هنا..." oninput="autoGrow(this)"></textarea>
+            <button class="remove-btn" onclick="removeChip(this)">✕</button>
+          </li>
+        </ul>
+        <button class="add-btn" onclick="addCourse()"><span>➕ إضافة دورة</span></button>
+      </div>
+    </div>
+
+    <!-- Achievements -->
+    <div class="page">
+      <div class="page-stamp c-achieve">🏅 الإنجازات والأنشطة والمسابقات</div>
+      <div class="page-body">
+        <ul class="chip-list achievements" id="achievementsList">
+          <li class="chip">
+            <span class="dot"></span>
+            <textarea rows="1" placeholder="اكتب الإنجاز / النشاط / المسابقة هنا..." oninput="autoGrow(this)"></textarea>
+            <button class="remove-btn" onclick="removeChip(this)">✕</button>
+          </li>
+        </ul>
+        <button class="add-btn gold" onclick="addAchievement()"><span>➕ إضافة إنجاز</span></button>
+      </div>
+    </div>
+
+    <!-- Journey TABLE -->
+    <div class="page">
+      <div class="page-stamp c-journey">🧭 رحلة السفير داخل المركز الاستكشافي بالمنوفية</div>
+      <div class="page-body">
+        <div class="journey-table-wrap">
+          <table class="journey-table">
+            <thead>
+              <tr>
+                <th style="width:42px;">#</th>
+                <th>عنوان التدريب</th>
+                <th>الهدف منه</th>
+                <th>الفئة المستهدفة</th>
+                <th>مدة التدريب</th>
+                <th>كيفية التدريب<br><span style="font-size:11px;font-weight:500;">(محاضرات / أنشطة / تدريب بالمركز / محاضرات أون لاين)</span></th>
+                <th>مخرجات التدريب</th>
+                <th style="width:44px;"></th>
+              </tr>
+            </thead>
+            <tbody id="journeyBody">
+              <tr>
+                <td class="row-num">1</td>
+                <td><textarea rows="2" placeholder="عنوان التدريب..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="الهدف منه..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="الفئة المستهدفة..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="مدة التدريب..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="كيفية التدريب..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="مخرجات التدريب..." oninput="autoGrow(this)"></textarea></td>
+                <td class="remove-cell"><button class="remove-btn" onclick="removeJourneyRow(this)">✕</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button class="add-btn" onclick="addJourneyRow()"><span>➕ إضافة محطة</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="action-bar">
+    <button class="btn btn-preview" onclick="showPreview()"><span>👁️ معاينة الاستمارة</span></button>
+    <button class="btn btn-clear" onclick="clearData()"><span>🗑️ مسح الكل</span></button>
+  </div>
+</div>
+
+<!-- PREVIEW MODAL -->
+<div class="overlay" id="previewOverlay" onclick="if(event.target===this) closePreview()">
+  <div class="modal">
+    <div class="modal-head">
+      <span>👁️ معاينة الاستمارة</span>
+      <button onclick="closePreview()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="previewCaptureArea"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-preview" onclick="closePreview()"><span>✏️ رجوع للتعديل</span></button>
+      <button class="btn btn-export" id="exportBtn" onclick="exportPreviewImage()"><span>📥 تصدير كصورة PNG</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM -->
+<div class="overlay" id="confirmOverlay">
+  <div class="confirm-box">
+    <div class="confirm-icon">🗑️</div>
+    <div class="confirm-title">مسح كل البيانات؟</div>
+    <div class="confirm-text">هيتم مسح كل الحقول والصورة والدورات والإنجازات ورحلة السفير.</div>
+    <div class="confirm-actions">
+      <button class="btn btn-clear" id="confirmYes"><span>نعم، امسح الكل</span></button>
+      <button class="btn btn-preview" id="confirmNo"><span>إلغاء</span></button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function escapeHTML(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+function autoGrow(el){el.style.height='auto';el.style.height=el.scrollHeight+'px';}
+
+/* ============ Courses List ============ */
+function addCourse(){
+  const list=document.getElementById('coursesList');
+  const li=document.createElement('li');
+  li.className='chip';
+  li.innerHTML=`<span class="dot"></span><textarea rows="1" placeholder="اكتب اسم الدورة هنا..." oninput="autoGrow(this)"></textarea><button class="remove-btn" onclick="removeChip(this)">✕</button>`;
+  list.appendChild(li);
+  li.querySelector('textarea').focus();
+}
+
+/* ============ Achievements List ============ */
+function addAchievement(){
+  const list=document.getElementById('achievementsList');
+  const li=document.createElement('li');
+  li.className='chip';
+  li.innerHTML=`<span class="dot"></span><textarea rows="1" placeholder="اكتب الإنجاز / النشاط / المسابقة هنا..." oninput="autoGrow(this)"></textarea><button class="remove-btn" onclick="removeChip(this)">✕</button>`;
+  list.appendChild(li);
+  li.querySelector('textarea').focus();
+}
+
+/* ============ Remove Chip ============ */
+function removeChip(btn){
+  const li=btn.closest('li');const list=li.parentElement;
+  if(list.children.length<=1){showToast('يجب أن تبقى نقطة واحدة على الأقل');return;}
+  li.remove();
+}
+
+/* ============ Journey Row ============ */
+function addJourneyRow(){
+  const tbody=document.getElementById('journeyBody');
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td class="row-num"></td>
+    <td><textarea rows="2" placeholder="عنوان التدريب..." oninput="autoGrow(this)"></textarea></td>
+    <td><textarea rows="2" placeholder="الهدف منه..." oninput="autoGrow(this)"></textarea></td>
+    <td><textarea rows="2" placeholder="الفئة المستهدفة..." oninput="autoGrow(this)"></textarea></td>
+    <td><textarea rows="2" placeholder="مدة التدريب..." oninput="autoGrow(this)"></textarea></td>
+    <td><textarea rows="2" placeholder="كيفية التدريب..." oninput="autoGrow(this)"></textarea></td>
+    <td><textarea rows="2" placeholder="مخرجات التدريب..." oninput="autoGrow(this)"></textarea></td>
+    <td class="remove-cell"><button class="remove-btn" onclick="removeJourneyRow(this)">✕</button></td>`;
+  tbody.appendChild(tr);
+  renumber();
+  tr.querySelectorAll('textarea').forEach(autoGrow);
+  tr.querySelector('textarea').focus();
+}
+function removeJourneyRow(btn){
+  const tr=btn.closest('tr');const tbody=tr.parentElement;
+  if(tbody.children.length<=1){showToast('يجب أن تبقى محطة واحدة على الأقل');return;}
+  tr.remove();renumber();
+}
+function renumber(){document.querySelectorAll('#journeyBody .row-num').forEach((td,i)=>td.textContent=i+1);}
+
+/* ============ Photo ============ */
+function previewPhoto(e){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=function(ev){
+    const img=document.getElementById('previewImg');
+    img.src=ev.target.result;img.style.display='block';
+    document.querySelector('.photo-icon').style.display='none';
+    document.querySelector('.photo-text').style.display='none';
+  };
+  r.readAsDataURL(f);
+}
+
+/* ============ Collect Data ============ */
+function collectData(){
+  const courses=[...document.querySelectorAll('#coursesList textarea')].map(t=>t.value.trim()).filter(Boolean);
+  const achievements=[...document.querySelectorAll('#achievementsList textarea')].map(t=>t.value.trim()).filter(Boolean);
+  const journey=[];
+  document.querySelectorAll('#journeyBody tr').forEach(tr=>{
+    const t=tr.querySelectorAll('textarea');
+    if(t.length<6)return;
+    const row={training:t[0].value.trim(),goal:t[1].value.trim(),audience:t[2].value.trim(),duration:t[3].value.trim(),method:t[4].value.trim(),outcomes:t[5].value.trim()};
+    if(Object.values(row).some(v=>v))journey.push(row);
+  });
+  return{
+    name:document.getElementById('f-name').value.trim(),
+    school:document.getElementById('f-school').value.trim(),
+    grade:document.getElementById('f-grade').value.trim(),
+    phone:document.getElementById('f-phone').value.trim(),
+    email:document.getElementById('f-email').value.trim(),
+    photo:document.getElementById('previewImg').src||'',
+    courses,achievements,journey
+  };
+}
+function hasPhoto(src){return src && src!=='' && !src.endsWith('undefined') && !src.endsWith(window.location.href);}
+
+/* ============ Preview Modal ============ */
+function showPreview(){
+  const d=collectData();
+  const photoHTML=hasPhoto(d.photo)?`<img src="${d.photo}" alt="صورة">`:`<div class="none">🧭<br>لا توجد صورة</div>`;
+  const rows=[['الاسم',d.name],['المدرسة',d.school],['الصف الدراسي',d.grade],['رقم الهاتف',d.phone],['البريد الإلكتروني',d.email]]
+    .map(([l,v])=>`<div class="pc-row"><b>${l}:</b><span>${escapeHTML(v||'—')}</span></div>`).join('');
+  const listHTML=(arr,empty)=>arr.length?arr.map(v=>`<div class="pc-list-item">${escapeHTML(v)}</div>`).join(''):`<div class="pc-list-item empty">${empty}</div>`;
+  let journeyRows='';
+  if(d.journey.length===0){journeyRows=`<tr><td colspan="6" style="text-align:center;color:#B0B8C1;font-style:italic;padding:20px;">لم تُسجل محطات الرحلة بعد</td></tr>`;}
+  else{d.journey.forEach(row=>{journeyRows+=`<tr><td>${escapeHTML(row.training||'—')}</td><td>${escapeHTML(row.goal||'—')}</td><td>${escapeHTML(row.audience||'—')}</td><td>${escapeHTML(row.duration||'—')}</td><td>${escapeHTML(row.method||'—')}</td><td>${escapeHTML(row.outcomes||'—')}</td></tr>`;});}
+
+  document.getElementById('previewCaptureArea').innerHTML=`
+    <div class="pc-logos">
+      <div class="brand-logos">
+        <img src="imeage/ministry.png" alt="وزارة التربية والتعليم" onerror="this.style.display='none'">
+        <img src="imeage/center.png" alt="المركز الاستكشافي" onerror="this.style.display='none'">
+      </div>
+      <div class="pc-title">بطاقة سفير
+        <small>المركز الاستكشافي بالمنوفية</small>
+      </div>
+      <div class="brand-logos">
+        <img src="imeage/menoufia.png" alt="إدارة المنوفية" onerror="this.style.display='none'">
+        <img src="imeage/directorate.png" alt="مديرية التربية والتعليم" onerror="this.style.display='none'">
+      </div>
+    </div>
+
+    <div class="pc-section">
+      <div class="pc-section-title">📋 بيانات السفير</div>
+      <div class="pc-id-card">
+        <div class="pc-photo"><div class="pc-photo-inner">${photoHTML}</div></div>
+        <div class="pc-fields">${rows}</div>
+      </div>
+    </div>
+
+    <div class="pc-section">
+      <div class="pc-section-title">🎓 الدورات الحاصل عليها</div>
+      <div class="pc-list">${listHTML(d.courses,'لا توجد دورات مسجلة')}</div>
+    </div>
+
+    <div class="pc-section achieve">
+      <div class="pc-section-title">🏅 الإنجازات والأنشطة والمسابقات</div>
+      <div class="pc-list">${listHTML(d.achievements,'لا توجد إنجازات مسجلة')}</div>
+    </div>
+
+    <div class="pc-section journey">
+      <div class="pc-section-title">🧭 رحلة السفير داخل المركز الاستكشافي بالمنوفية</div>
+      <div class="pc-journey-table-wrap">
+        <table class="pc-journey-table">
+          <thead><tr>
+            <th>عنوان التدريب</th><th>الهدف منه</th><th>الفئة المستهدفة</th><th>مدة التدريب</th>
+            <th>كيفية التدريب<br><span style="font-size:10.5px;font-weight:500;">(محاضرات / أنشطة / تدريب بالمركز / محاضرات أون لاين)</span></th>
+            <th>مخرجات التدريب</th>
+          </tr></thead>
+          <tbody>${journeyRows}</tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="pc-footer">بطاقة سفير — المركز الاستكشافي بالمنوفية · ${new Date().toLocaleDateString('ar-EG')}</div>`;
+
+  document.getElementById('previewOverlay').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closePreview(){
+  document.getElementById('previewOverlay').classList.remove('active');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closePreview();document.getElementById('confirmOverlay').classList.remove('active');}
+});
+
+/* ============ Export Image ============ */
+async function exportPreviewImage(){
+  const target=document.getElementById('previewCaptureArea');
+  const btn=document.getElementById('exportBtn');
+  if(!btn)return;
+  const original=btn.innerHTML;
+  btn.innerHTML='<span>⏳ جاري التصدير...</span>';btn.disabled=true;
+
+  try{
+    const canvas=await html2canvas(target,{
+      scale:2,
+      backgroundColor:'#ffffff',
+      useCORS:true,
+      allowTaint:true,
+      logging:false
+    });
+    canvas.toBlob(blob=>{
+      if(!blob){showToast('❌ فشل التصدير');return;}
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      const name=document.getElementById('f-name').value.trim()||'سفير';
+      a.href=url;a.download=`بطاقة-سفير-${name}.png`;
+      document.body.appendChild(a);a.click();document.body.removeChild(a);
+      setTimeout(()=>URL.revokeObjectURL(url),1000);
+      showToast('✅ تم تصدير البطاقة كصورة بنجاح');
+    },'image/png',1.0);
+  }catch(err){console.error(err);showToast('❌ حدث خطأ أثناء التصدير');}
+  finally{btn.innerHTML=original;btn.disabled=false;}
+}
+
+/* ============ Reset Form ============ */
+function resetFormUI(){
+  ['f-name','f-school','f-grade','f-phone','f-email'].forEach(id=>document.getElementById(id).value='');
+  const img=document.getElementById('previewImg');
+  img.removeAttribute('src');img.style.display='none';
+  document.querySelector('.photo-icon').style.display='';
+  document.querySelector('.photo-text').style.display='';
+  document.getElementById('photoInput').value='';
+
+  document.getElementById('coursesList').innerHTML=`<li class="chip"><span class="dot"></span><textarea rows="1" placeholder="اكتب اسم الدورة هنا..." oninput="autoGrow(this)"></textarea><button class="remove-btn" onclick="removeChip(this)">✕</button></li>`;
+  document.getElementById('achievementsList').innerHTML=`<li class="chip"><span class="dot"></span><textarea rows="1" placeholder="اكتب الإنجاز / النشاط / المسابقة هنا..." oninput="autoGrow(this)"></textarea><button class="remove-btn" onclick="removeChip(this)">✕</button></li>`;
+  document.getElementById('journeyBody').innerHTML=`<tr><td class="row-num">1</td><td><textarea rows="2" placeholder="عنوان التدريب..." oninput="autoGrow(this)"></textarea></td><td><textarea rows="2" placeholder="الهدف منه..." oninput="autoGrow(this)"></textarea></td><td><textarea rows="2" placeholder="الفئة المستهدفة..." oninput="autoGrow(this)"></textarea></td><td><textarea rows="2" placeholder="مدة التدريب..." oninput="autoGrow(this)"></textarea></td><td><textarea rows="2" placeholder="كيفية التدريب..." oninput="autoGrow(this)"></textarea></td><td><textarea rows="2" placeholder="مخرجات التدريب..." oninput="autoGrow(this)"></textarea></td><td class="remove-cell"><button class="remove-btn" onclick="removeJourneyRow(this)">✕</button></td></tr>`;
+  document.querySelectorAll('textarea').forEach(autoGrow);
+}
+
+/* ============ Clear Data ============ */
+function clearData(){document.getElementById('confirmOverlay').classList.add('active');}
+document.getElementById('confirmYes').addEventListener('click',()=>{
+  document.getElementById('confirmOverlay').classList.remove('active');
+  resetFormUI();showToast('تم مسح كل البيانات ✅');
+});
+document.getElementById('confirmNo').addEventListener('click',()=>document.getElementById('confirmOverlay').classList.remove('active'));
+document.getElementById('confirmOverlay').addEventListener('click',function(e){if(e.target===this)this.classList.remove('active');});
+
+/* ============ Toast ============ */
+let toastTimer=null;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2400);
+}
+
+/* ============ Init ============ */
+window.onload=function(){
+  document.querySelectorAll('textarea').forEach(autoGrow);
+};
+</script>
+</body>
+</html>
