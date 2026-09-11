@@ -56,7 +56,6 @@
     min-width:0;
   }
 
-  /* ★★★ العنوان بتدرج لوني في الفورمة ★★★ */
   .hero-title{
     font-family:'Cairo',sans-serif;
     font-weight:900;
@@ -108,79 +107,45 @@
   .page-body{padding:16px 22px 22px;}
 
   .chip-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
-  .chip{display:flex;align-items:flex-start;gap:10px;background:var(--paper-alt);border:1px solid var(--line);border-radius:10px;padding:10px 12px;}
+  .chip{display:flex;align-items:flex-start;gap:10px;background:var(--paper-alt);border:1px solid var(--line);border-radius:10px;padding:10px 12px;flex-wrap:wrap;}
   .chip:focus-within{border-color:var(--teal);box-shadow:0 0 0 3px rgba(31,191,168,.15);background:#fff;}
   .chip .dot{flex-shrink:0;width:9px;height:9px;border-radius:50%;margin-top:9px;}
   .chip-list.courses .dot{background:var(--teal);}
   .chip-list.achievements .dot{background:var(--gold);}
-  .chip textarea{flex:1;border:none;background:transparent;resize:none;overflow:hidden;font-family:inherit;font-size:15px;line-height:1.6;color:var(--ink);min-height:26px;outline:none;}
+
+  /* خانات الدورات والإنجازات: 3 أسطر ثابتة */
+  .chip textarea{
+    flex:1;
+    border:none;
+    background:transparent;
+    resize:none;
+    overflow-y:auto;
+    font-family:inherit;
+    font-size:15px;
+    line-height:1.6;
+    color:var(--ink);
+    outline:none;
+    height:calc(1.6em * 3 + 20px);
+    min-height:calc(1.6em * 3 + 20px);
+    max-height:calc(1.6em * 3 + 20px);
+    min-width:180px;
+  }
   .chip .remove-btn{background:transparent;border:none;color:#c3c9d1;font-size:17px;cursor:pointer;padding:2px 4px;}
   .chip .remove-btn:hover{color:var(--danger);}
 
-  /* ★★★ زر إضافة كريستالي (تركواز) ★★★ */
-  .add-btn{
-    margin-top:14px;
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    font-family:'Tajawal',sans-serif;
-    font-weight:700;
-    font-size:14px;
-    padding:10px 22px;
-    border-radius:999px;
-    cursor:pointer;
-    color:#fff;
-    position:relative;
-    overflow:hidden;
-    background-color:#1FBFA8;
-    background-image:linear-gradient(135deg,
-      rgba(31,191,168,.95) 0%,
-      rgba(51,183,240,.85) 100%);
-    border:2px solid rgba(255,255,255,.7);
-    box-shadow:
-      0 8px 20px rgba(31,191,168,.35),
-      0 0 0 1px rgba(255,255,255,.3) inset,
-      0 1px 0 rgba(255,255,255,.8) inset;
-    text-shadow:0 1px 3px rgba(0,0,0,.3);
-    transition:transform .18s,box-shadow .18s;
+  /* عدّاد الحروف */
+  .char-counter{
+    flex-basis:100%;
+    text-align:left;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    font-weight:600;
+    padding-left:22px;
+    margin-top:2px;
+    transition:color .2s;
   }
-  .add-btn::before{
-    content:"";
-    position:absolute;
-    top:0;left:0;right:0;
-    height:50%;
-    background:linear-gradient(180deg,
-      rgba(255,255,255,.55) 0%,
-      rgba(255,255,255,.05) 100%);
-    border-radius:999px 999px 0 0;
-    pointer-events:none;
-  }
-  .add-btn:hover{
-    transform:translateY(-3px);
-    box-shadow:
-      0 12px 26px rgba(31,191,168,.5),
-      0 0 0 1px rgba(255,255,255,.4) inset,
-      0 1px 0 rgba(255,255,255,.9) inset;
-  }
-  .add-btn > *{position:relative;z-index:1;}
-
-  /* ★★★ زر إضافة إنجاز كريستالي (ذهبي) ★★★ */
-  .add-btn.gold{
-    background-color:#E8A33D;
-    background-image:linear-gradient(135deg,
-      rgba(232,163,61,.95) 0%,
-      rgba(244,200,120,.9) 100%);
-    box-shadow:
-      0 8px 20px rgba(232,163,61,.4),
-      0 0 0 1px rgba(255,255,255,.3) inset,
-      0 1px 0 rgba(255,255,255,.8) inset;
-  }
-  .add-btn.gold:hover{
-    box-shadow:
-      0 12px 26px rgba(232,163,61,.55),
-      0 0 0 1px rgba(255,255,255,.4) inset,
-      0 1px 0 rgba(255,255,255,.9) inset;
-  }
+  .char-counter.warn{color:var(--gold);}
+  .char-counter.limit{color:var(--danger);font-weight:700;}
 
   /* JOURNEY TABLE */
   .journey-table-wrap{width:100%;overflow-x:auto;border-radius:10px;border:2px solid #1FBFA8;background:#fff;}
@@ -191,14 +156,10 @@
   .journey-table textarea{width:100%;border:1px solid #e5eef5;border-radius:8px;background:#fbfeff;padding:8px 10px;font-family:inherit;font-size:14px;line-height:1.5;color:var(--ink);resize:none;overflow:hidden;min-height:60px;outline:none;text-align:center;}
   .journey-table textarea:focus{border-color:var(--teal);background:#fff;box-shadow:0 0 0 3px rgba(31,191,168,.15);}
   .journey-table .row-num{font-family:'Cairo',sans-serif;font-weight:800;color:var(--teal-dark);font-size:16px;background:#e8f9f6 !important;vertical-align:middle !important;width:42px;}
-  .journey-table .remove-cell{width:44px;vertical-align:middle !important;}
-  .journey-table .remove-cell .remove-btn{background:transparent;border:none;color:#c3c9d1;font-size:18px;cursor:pointer;padding:6px;}
-  .journey-table .remove-cell .remove-btn:hover{color:var(--danger);background:#fee2e2;}
 
   /* ACTION BAR */
   .action-bar{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;padding:26px;background:linear-gradient(120deg,rgba(31,191,168,.08),rgba(232,163,61,.08));border-top:1px dashed var(--line);}
 
-  /* ★★★ الأزرار الكريستالية الرئيسية ★★★ */
   .btn{
     position:relative;
     display:inline-flex;
@@ -245,7 +206,6 @@
   .btn:hover::after{left:130%;}
   .btn > *{position:relative;z-index:1;}
 
-  /* زر معاينة (تركواز-أزرق) */
   .btn-preview{
     background-color:#1FBFA8;
     background-image:linear-gradient(135deg,
@@ -263,7 +223,6 @@
       0 1px 0 rgba(255,255,255,.9) inset;
   }
 
-  /* زر تصدير (ذهبي) */
   .btn-export{
     background-color:#E8A33D;
     background-image:linear-gradient(135deg,
@@ -281,7 +240,6 @@
       0 1px 0 rgba(255,255,255,.9) inset;
   }
 
-  /* زر مسح (أحمر) */
   .btn-clear{
     background-color:#C1443A;
     background-image:linear-gradient(135deg,
@@ -348,7 +306,6 @@
   }
   .pc-logos .brand-logos img:hover{transform:scale(1.08) rotate(-3deg);}
 
-  /* ★★★ العنوان بتدرج لوني في المعاينة (يظهر في التصدير) ★★★ */
   .pc-logos .pc-title{
     flex:1;
     text-align:center;
@@ -395,11 +352,52 @@
   .pc-list-item::before{content:"●";color:#1FBFA8;font-size:15px;flex-shrink:0;}
   .pc-section.achieve .pc-list-item::before{color:#E8A33D;}
   .pc-list-item.empty{color:#B0B8C1;font-style:italic;}
-  .pc-journey-table-wrap{width:100%;overflow-x:auto;border-radius:10px;border:2px solid #1FBFA8;background:#fff;}
-  .pc-journey-table{width:100%;min-width:1000px;border-collapse:collapse;font-size:13.5px;}
+
+  /* جدول رحلة السفير في المعاينة: عرض الصفحة كامل */
+  .pc-journey-table-wrap{
+    width:100%;
+    max-width:100%;
+    overflow-x:auto;
+    border-radius:10px;
+    border:2px solid #1FBFA8;
+    background:#fff;
+  }
+  .pc-journey-table{width:100%;border-collapse:collapse;font-size:13.5px;}
   .pc-journey-table thead th{background:linear-gradient(135deg,#1FBFA8,#33B7F0);color:#fff;padding:11px 8px;font-family:'Cairo',sans-serif;font-weight:800;font-size:13px;text-align:center;border:1px solid #17a892;line-height:1.4;}
   .pc-journey-table tbody td{padding:10px 8px;border:1px solid #d5e5f0;background:#fff;text-align:center;vertical-align:top;font-size:13.5px;color:var(--ink);line-height:1.5;word-break:break-word;white-space:pre-wrap;}
   .pc-journey-table tbody tr:nth-child(even) td{background:#F8FCFF;}
+
+  /* ★★★ وضع التصدير: خط أصغر للقوائم + تكبير الجدول ★★★ */
+  #previewCaptureArea.export-mode .pc-list-item{
+    font-size:11px !important;
+    line-height:1.45 !important;
+    padding:5px 0 !important;
+  }
+  #previewCaptureArea.export-mode .pc-list-item::before{
+    font-size:11px !important;
+  }
+  #previewCaptureArea.export-mode .pc-list{
+    padding:10px 14px !important;
+  }
+  #previewCaptureArea.export-mode .pc-section-title{
+    font-size:13px !important;
+    padding:6px 16px !important;
+  }
+
+  /* تكبير الجدول عند التصدير عشان يكون أوضح وأدق */
+  #previewCaptureArea.export-mode .pc-journey-table{
+    font-size:16px !important;
+  }
+  #previewCaptureArea.export-mode .pc-journey-table thead th{
+    font-size:15px !important;
+    padding:14px 10px !important;
+  }
+  #previewCaptureArea.export-mode .pc-journey-table tbody td{
+    font-size:16px !important;
+    padding:14px 10px !important;
+    line-height:1.6 !important;
+  }
+
   .pc-footer{margin-top:22px;padding-top:14px;border-top:2px dashed #D5EEF0;text-align:center;font-size:12.5px;color:var(--ink-soft);}
 
   @media (max-width:700px){
@@ -431,16 +429,16 @@
     <div class="hero-top">
       <div class="brand-logos">
         <img src="imeage/ministry.png" alt="شعار وزارة التربية والتعليم" onerror="this.style.display='none'">
-        <img src="imeage/center.png" alt="شعار المركز الاستكشافي" onerror="this.style.display='none'">
+        <img src="imeage/menoufia.png" alt="شعار المركز الاستكشافي" onerror="this.style.display='none'">
       </div>
-      <div class="hero-title-wrap">
+      <div class="hero-title-rap">
         <div class="hero-title">بطاقة سفير
           <small>المركز الاستكشافي بالمنوفية</small>
         </div>
       </div>
       <div class="brand-logos">
-        <img src="imeage/menoufia.png" alt="شعار إدارة المنوفية" onerror="this.style.display='none'">
-        <img src="imeage/directorate.png" alt="شعار مديرية التربية والتعليم" onerror="this.style.display='none'">
+        <img src="imeage/directorate.png" alt="شعار إدارة المنوفية" onerror="this.style.display='none'">
+        <img src="imeage/center.png" alt="شعار مديرية التربية والتعليم" onerror="this.style.display='none'">
       </div>
     </div>
 
@@ -463,8 +461,9 @@
         <div class="id-grid">
           <div class="id-field"><label>المدرسة</label><input type="text" id="f-school" placeholder="اسم المدرسة"></div>
           <div class="id-field"><label>الصف الدراسي</label><input type="text" id="f-grade" placeholder="الصف"></div>
+          <div class="id-field"><label>تاريخ الميلاد</label><input type="text" id="f-birthdate" placeholder="مثال: 2010/05/15"></div>
           <div class="id-field"><label>رقم الهاتف</label><input type="tel" id="f-phone" placeholder="رقم الهاتف"></div>
-          <div class="id-field"><label>البريد الإلكتروني</label><input type="email" id="f-email" placeholder="البريد الإلكتروني"></div>
+          <div class="id-field" style="grid-column:1 / -1;"><label>البريد الإلكتروني</label><input type="email" id="f-email" placeholder="البريد الإلكتروني"></div>
         </div>
       </div>
     </div>
@@ -480,11 +479,11 @@
         <ul class="chip-list courses" id="coursesList">
           <li class="chip">
             <span class="dot"></span>
-            <textarea rows="1" placeholder="اكتب اسم الدورة هنا..." oninput="autoGrow(this)"></textarea>
+            <textarea rows="3" maxlength="400" placeholder="اكتب اسم الدورة هنا..." oninput="updateCounter(this)"></textarea>
             <button class="remove-btn" onclick="removeChip(this)">✕</button>
+            <div class="char-counter">0 / 400</div>
           </li>
         </ul>
-        <button class="add-btn" onclick="addCourse()"><span>➕ إضافة دورة</span></button>
       </div>
     </div>
 
@@ -495,11 +494,11 @@
         <ul class="chip-list achievements" id="achievementsList">
           <li class="chip">
             <span class="dot"></span>
-            <textarea rows="1" placeholder="اكتب الإنجاز / النشاط / المسابقة هنا..." oninput="autoGrow(this)"></textarea>
+            <textarea rows="3" maxlength="400" placeholder="اكتب الإنجاز / النشاط / المسابقة هنا..." oninput="updateCounter(this)"></textarea>
             <button class="remove-btn" onclick="removeChip(this)">✕</button>
+            <div class="char-counter">0 / 400</div>
           </li>
         </ul>
-        <button class="add-btn gold" onclick="addAchievement()"><span>➕ إضافة إنجاز</span></button>
       </div>
     </div>
 
@@ -518,7 +517,6 @@
                 <th>مدة التدريب</th>
                 <th>كيفية التدريب<br><span style="font-size:11px;font-weight:500;">(محاضرات / أنشطة / تدريب بالمركز / محاضرات أون لاين)</span></th>
                 <th>مخرجات التدريب</th>
-                <th style="width:44px;"></th>
               </tr>
             </thead>
             <tbody id="journeyBody">
@@ -530,12 +528,46 @@
                 <td><textarea rows="2" placeholder="مدة التدريب..." oninput="autoGrow(this)"></textarea></td>
                 <td><textarea rows="2" placeholder="كيفية التدريب..." oninput="autoGrow(this)"></textarea></td>
                 <td><textarea rows="2" placeholder="مخرجات التدريب..." oninput="autoGrow(this)"></textarea></td>
-                <td class="remove-cell"><button class="remove-btn" onclick="removeJourneyRow(this)">✕</button></td>
+              </tr>
+              <tr>
+                <td class="row-num">2</td>
+                <td><textarea rows="2" placeholder="عنوان التدريب..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="الهدف منه..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="الفئة المستهدفة..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="مدة التدريب..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="كيفية التدريب..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="مخرجات التدريب..." oninput="autoGrow(this)"></textarea></td>
+              </tr>
+              <tr>
+                <td class="row-num">3</td>
+                <td><textarea rows="2" placeholder="عنوان التدريب..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="الهدف منه..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="الفئة المستهدفة..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="مدة التدريب..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="كيفية التدريب..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="مخرجات التدريب..." oninput="autoGrow(this)"></textarea></td>
+              </tr>
+              <tr>
+                <td class="row-num">4</td>
+                <td><textarea rows="2" placeholder="عنوان التدريب..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="الهدف منه..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="الفئة المستهدفة..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="مدة التدريب..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="كيفية التدريب..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="مخرجات التدريب..." oninput="autoGrow(this)"></textarea></td>
+              </tr>
+              <tr>
+                <td class="row-num">5</td>
+                <td><textarea rows="2" placeholder="عنوان التدريب..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="الهدف منه..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="الفئة المستهدفة..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="مدة التدريب..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="كيفية التدريب..." oninput="autoGrow(this)"></textarea></td>
+                <td><textarea rows="2" placeholder="مخرجات التدريب..." oninput="autoGrow(this)"></textarea></td>
               </tr>
             </tbody>
           </table>
         </div>
-        <button class="add-btn" onclick="addJourneyRow()"><span>➕ إضافة محطة</span></button>
       </div>
     </div>
   </div>
@@ -583,116 +615,110 @@
 function escapeHTML(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
 function autoGrow(el){el.style.height='auto';el.style.height=el.scrollHeight+'px';}
 
-/* ============ Courses List ============ */
-function addCourse(){
-  const list=document.getElementById('coursesList');
-  const li=document.createElement('li');
-  li.className='chip';
-  li.innerHTML=`<span class="dot"></span><textarea rows="1" placeholder="اكتب اسم الدورة هنا..." oninput="autoGrow(this)"></textarea><button class="remove-btn" onclick="removeChip(this)">✕</button>`;
-  list.appendChild(li);
-  li.querySelector('textarea').focus();
-}
-
-/* ============ Achievements List ============ */
-function addAchievement(){
-  const list=document.getElementById('achievementsList');
-  const li=document.createElement('li');
-  li.className='chip';
-  li.innerHTML=`<span class="dot"></span><textarea rows="1" placeholder="اكتب الإنجاز / النشاط / المسابقة هنا..." oninput="autoGrow(this)"></textarea><button class="remove-btn" onclick="removeChip(this)">✕</button>`;
-  list.appendChild(li);
-  li.querySelector('textarea').focus();
+/* ============ عدّاد الحروف (400 حرف) ============ */
+const MAX_CHARS = 400;
+function updateCounter(el){
+  const len = el.value.length;
+  const counter = el.parentElement.querySelector('.char-counter');
+  if(!counter) return;
+  counter.textContent = `${len} / ${MAX_CHARS}`;
+  counter.classList.remove('warn','limit');
+  if(len >= MAX_CHARS){
+    counter.classList.add('limit');
+  } else if(len >= MAX_CHARS * 0.8){
+    counter.classList.add('warn');
+  }
 }
 
 /* ============ Remove Chip ============ */
 function removeChip(btn){
-  const li=btn.closest('li');const list=li.parentElement;
-  if(list.children.length<=1){showToast('يجب أن تبقى نقطة واحدة على الأقل');return;}
+  const li = btn.closest('li');
+  const list = li.parentElement;
+  if(list.children.length <= 1){
+    showToast('يجب أن تبقى نقطة واحدة على الأقل');
+    return;
+  }
   li.remove();
 }
 
-/* ============ Journey Row ============ */
-function addJourneyRow(){
-  const tbody=document.getElementById('journeyBody');
-  const tr=document.createElement('tr');
-  tr.innerHTML=`<td class="row-num"></td>
-    <td><textarea rows="2" placeholder="عنوان التدريب..." oninput="autoGrow(this)"></textarea></td>
-    <td><textarea rows="2" placeholder="الهدف منه..." oninput="autoGrow(this)"></textarea></td>
-    <td><textarea rows="2" placeholder="الفئة المستهدفة..." oninput="autoGrow(this)"></textarea></td>
-    <td><textarea rows="2" placeholder="مدة التدريب..." oninput="autoGrow(this)"></textarea></td>
-    <td><textarea rows="2" placeholder="كيفية التدريب..." oninput="autoGrow(this)"></textarea></td>
-    <td><textarea rows="2" placeholder="مخرجات التدريب..." oninput="autoGrow(this)"></textarea></td>
-    <td class="remove-cell"><button class="remove-btn" onclick="removeJourneyRow(this)">✕</button></td>`;
-  tbody.appendChild(tr);
-  renumber();
-  tr.querySelectorAll('textarea').forEach(autoGrow);
-  tr.querySelector('textarea').focus();
-}
-function removeJourneyRow(btn){
-  const tr=btn.closest('tr');const tbody=tr.parentElement;
-  if(tbody.children.length<=1){showToast('يجب أن تبقى محطة واحدة على الأقل');return;}
-  tr.remove();renumber();
-}
-function renumber(){document.querySelectorAll('#journeyBody .row-num').forEach((td,i)=>td.textContent=i+1);}
-
 /* ============ Photo ============ */
 function previewPhoto(e){
-  const f=e.target.files[0];if(!f)return;
-  const r=new FileReader();
-  r.onload=function(ev){
-    const img=document.getElementById('previewImg');
-    img.src=ev.target.result;img.style.display='block';
-    document.querySelector('.photo-icon').style.display='none';
-    document.querySelector('.photo-text').style.display='none';
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = function(ev){
+    const img = document.getElementById('previewImg');
+    img.src = ev.target.result; img.style.display = 'block';
+    document.querySelector('.photo-icon').style.display = 'none';
+    document.querySelector('.photo-text').style.display = 'none';
   };
   r.readAsDataURL(f);
 }
 
 /* ============ Collect Data ============ */
 function collectData(){
-  const courses=[...document.querySelectorAll('#coursesList textarea')].map(t=>t.value.trim()).filter(Boolean);
-  const achievements=[...document.querySelectorAll('#achievementsList textarea')].map(t=>t.value.trim()).filter(Boolean);
-  const journey=[];
+  const courses = [...document.querySelectorAll('#coursesList textarea')].map(t=>t.value.trim()).filter(Boolean);
+  const achievements = [...document.querySelectorAll('#achievementsList textarea')].map(t=>t.value.trim()).filter(Boolean);
+  const journey = [];
   document.querySelectorAll('#journeyBody tr').forEach(tr=>{
-    const t=tr.querySelectorAll('textarea');
-    if(t.length<6)return;
-    const row={training:t[0].value.trim(),goal:t[1].value.trim(),audience:t[2].value.trim(),duration:t[3].value.trim(),method:t[4].value.trim(),outcomes:t[5].value.trim()};
-    if(Object.values(row).some(v=>v))journey.push(row);
+    const t = tr.querySelectorAll('textarea');
+    if(t.length < 6) return;
+    const row = {
+      training: t[0].value.trim(),
+      goal: t[1].value.trim(),
+      audience: t[2].value.trim(),
+      duration: t[3].value.trim(),
+      method: t[4].value.trim(),
+      outcomes: t[5].value.trim()
+    };
+    if(Object.values(row).some(v=>v)) journey.push(row);
   });
-  return{
-    name:document.getElementById('f-name').value.trim(),
-    school:document.getElementById('f-school').value.trim(),
-    grade:document.getElementById('f-grade').value.trim(),
-    phone:document.getElementById('f-phone').value.trim(),
-    email:document.getElementById('f-email').value.trim(),
-    photo:document.getElementById('previewImg').src||'',
-    courses,achievements,journey
+  return {
+    name: document.getElementById('f-name').value.trim(),
+    school: document.getElementById('f-school').value.trim(),
+    grade: document.getElementById('f-grade').value.trim(),
+    birthdate: document.getElementById('f-birthdate').value.trim(),
+    phone: document.getElementById('f-phone').value.trim(),
+    email: document.getElementById('f-email').value.trim(),
+    photo: document.getElementById('previewImg').src || '',
+    courses, achievements, journey
   };
 }
-function hasPhoto(src){return src && src!=='' && !src.endsWith('undefined') && !src.endsWith(window.location.href);}
+function hasPhoto(src){return src && src !== '' && !src.endsWith('undefined') && !src.endsWith(window.location.href);}
 
 /* ============ Preview Modal ============ */
 function showPreview(){
-  const d=collectData();
-  const photoHTML=hasPhoto(d.photo)?`<img src="${d.photo}" alt="صورة">`:`<div class="none">🧭<br>لا توجد صورة</div>`;
-  const rows=[['الاسم',d.name],['المدرسة',d.school],['الصف الدراسي',d.grade],['رقم الهاتف',d.phone],['البريد الإلكتروني',d.email]]
-    .map(([l,v])=>`<div class="pc-row"><b>${l}:</b><span>${escapeHTML(v||'—')}</span></div>`).join('');
-  const listHTML=(arr,empty)=>arr.length?arr.map(v=>`<div class="pc-list-item">${escapeHTML(v)}</div>`).join(''):`<div class="pc-list-item empty">${empty}</div>`;
-  let journeyRows='';
-  if(d.journey.length===0){journeyRows=`<tr><td colspan="6" style="text-align:center;color:#B0B8C1;font-style:italic;padding:20px;">لم تُسجل محطات الرحلة بعد</td></tr>`;}
-  else{d.journey.forEach(row=>{journeyRows+=`<tr><td>${escapeHTML(row.training||'—')}</td><td>${escapeHTML(row.goal||'—')}</td><td>${escapeHTML(row.audience||'—')}</td><td>${escapeHTML(row.duration||'—')}</td><td>${escapeHTML(row.method||'—')}</td><td>${escapeHTML(row.outcomes||'—')}</td></tr>`;});}
+  const d = collectData();
+  const photoHTML = hasPhoto(d.photo) ? `<img src="${d.photo}" alt="صورة">` : `<div class="none">🧭<br>لا توجد صورة</div>`;
+  const rows = [
+    ['الاسم', d.name],
+    ['المدرسة', d.school],
+    ['الصف الدراسي', d.grade],
+    ['تاريخ الميلاد', d.birthdate],
+    ['رقم الهاتف', d.phone],
+    ['البريد الإلكتروني', d.email]
+  ].map(([l,v])=>`<div class="pc-row"><b>${l}:</b><span>${escapeHTML(v||'—')}</span></div>`).join('');
+  const listHTML = (arr,empty) => arr.length ? arr.map(v=>`<div class="pc-list-item">${escapeHTML(v)}</div>`).join('') : `<div class="pc-list-item empty">${empty}</div>`;
+  let journeyRows = '';
+  if(d.journey.length === 0){
+    journeyRows = `<tr><td colspan="6" style="text-align:center;color:#B0B8C1;font-style:italic;padding:20px;">لم تُسجل محطات الرحلة بعد</td></tr>`;
+  } else {
+    d.journey.forEach(row=>{
+      journeyRows += `<tr><td>${escapeHTML(row.training||'—')}</td><td>${escapeHTML(row.goal||'—')}</td><td>${escapeHTML(row.audience||'—')}</td><td>${escapeHTML(row.duration||'—')}</td><td>${escapeHTML(row.method||'—')}</td><td>${escapeHTML(row.outcomes||'—')}</td></tr>`;
+    });
+  }
 
-  document.getElementById('previewCaptureArea').innerHTML=`
+  document.getElementById('previewCaptureArea').innerHTML = `
     <div class="pc-logos">
       <div class="brand-logos">
         <img src="imeage/ministry.png" alt="وزارة التربية والتعليم" onerror="this.style.display='none'">
-        <img src="imeage/center.png" alt="المركز الاستكشافي" onerror="this.style.display='none'">
+        <img src="imeage/menoufia.png" alt="المركز الاستكشافي" onerror="this.style.display='none'">
       </div>
       <div class="pc-title">بطاقة سفير
         <small>المركز الاستكشافي بالمنوفية</small>
       </div>
       <div class="brand-logos">
-        <img src="imeage/menoufia.png" alt="إدارة المنوفية" onerror="this.style.display='none'">
-        <img src="imeage/directorate.png" alt="مديرية التربية والتعليم" onerror="this.style.display='none'">
+        <img src="imeage/directorate.png" alt="إدارة المنوفية" onerror="this.style.display='none'">
+        <img src="imeage/center.png" alt="مديرية التربية والتعليم" onerror="this.style.display='none'">
       </div>
     </div>
 
@@ -731,83 +757,104 @@ function showPreview(){
     <div class="pc-footer">بطاقة سفير — المركز الاستكشافي بالمنوفية · ${new Date().toLocaleDateString('ar-EG')}</div>`;
 
   document.getElementById('previewOverlay').classList.add('active');
-  document.body.style.overflow='hidden';
+  document.body.style.overflow = 'hidden';
 }
 function closePreview(){
   document.getElementById('previewOverlay').classList.remove('active');
-  document.body.style.overflow='';
+  document.body.style.overflow = '';
 }
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){closePreview();document.getElementById('confirmOverlay').classList.remove('active');}
+  if(e.key === 'Escape'){closePreview();document.getElementById('confirmOverlay').classList.remove('active');}
 });
 
 /* ============ Export Image ============ */
 async function exportPreviewImage(){
-  const target=document.getElementById('previewCaptureArea');
-  const btn=document.getElementById('exportBtn');
-  if(!btn)return;
-  const original=btn.innerHTML;
-  btn.innerHTML='<span>⏳ جاري التصدير...</span>';btn.disabled=true;
+  const target = document.getElementById('previewCaptureArea');
+  const btn = document.getElementById('exportBtn');
+  if(!btn) return;
+  const original = btn.innerHTML;
+  btn.innerHTML = '<span>⏳ جاري التصدير...</span>'; btn.disabled = true;
 
   try{
-    const canvas=await html2canvas(target,{
-      scale:2,
+    /* نفعّل وضع التصدير (خط أصغر للقوائم + تكبير الجدول) */
+    target.classList.add('export-mode');
+
+    /* ننتظر لحظة عشان الـ layout يتحدث */
+    await new Promise(r=>setTimeout(r,80));
+
+    const canvas = await html2canvas(target,{
+      scale:3,               /* ← دقة أعلى (كانت 2) */
       backgroundColor:'#ffffff',
       useCORS:true,
       allowTaint:true,
       logging:false
     });
+
+    /* نشيل وضع التصدير */
+    target.classList.remove('export-mode');
+
     canvas.toBlob(blob=>{
       if(!blob){showToast('❌ فشل التصدير');return;}
-      const url=URL.createObjectURL(blob);
-      const a=document.createElement('a');
-      const name=document.getElementById('f-name').value.trim()||'سفير';
-      a.href=url;a.download=`بطاقة-سفير-${name}.png`;
-      document.body.appendChild(a);a.click();document.body.removeChild(a);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const name = document.getElementById('f-name').value.trim() || 'سفير';
+      a.href = url; a.download = `بطاقة-سفير-${name}.png`;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
       setTimeout(()=>URL.revokeObjectURL(url),1000);
       showToast('✅ تم تصدير البطاقة كصورة بنجاح');
     },'image/png',1.0);
-  }catch(err){console.error(err);showToast('❌ حدث خطأ أثناء التصدير');}
-  finally{btn.innerHTML=original;btn.disabled=false;}
+  }catch(err){
+    console.error(err);
+    target.classList.remove('export-mode');
+    showToast('❌ حدث خطأ أثناء التصدير');
+  }
+  finally{btn.innerHTML = original; btn.disabled = false;}
 }
 
 /* ============ Reset Form ============ */
 function resetFormUI(){
-  ['f-name','f-school','f-grade','f-phone','f-email'].forEach(id=>document.getElementById(id).value='');
-  const img=document.getElementById('previewImg');
-  img.removeAttribute('src');img.style.display='none';
-  document.querySelector('.photo-icon').style.display='';
-  document.querySelector('.photo-text').style.display='';
-  document.getElementById('photoInput').value='';
+  ['f-name','f-school','f-grade','f-birthdate','f-phone','f-email'].forEach(id=>document.getElementById(id).value = '');
+  const img = document.getElementById('previewImg');
+  img.removeAttribute('src'); img.style.display = 'none';
+  document.querySelector('.photo-icon').style.display = '';
+  document.querySelector('.photo-text').style.display = '';
+  document.getElementById('photoInput').value = '';
 
-  document.getElementById('coursesList').innerHTML=`<li class="chip"><span class="dot"></span><textarea rows="1" placeholder="اكتب اسم الدورة هنا..." oninput="autoGrow(this)"></textarea><button class="remove-btn" onclick="removeChip(this)">✕</button></li>`;
-  document.getElementById('achievementsList').innerHTML=`<li class="chip"><span class="dot"></span><textarea rows="1" placeholder="اكتب الإنجاز / النشاط / المسابقة هنا..." oninput="autoGrow(this)"></textarea><button class="remove-btn" onclick="removeChip(this)">✕</button></li>`;
-  document.getElementById('journeyBody').innerHTML=`<tr><td class="row-num">1</td><td><textarea rows="2" placeholder="عنوان التدريب..." oninput="autoGrow(this)"></textarea></td><td><textarea rows="2" placeholder="الهدف منه..." oninput="autoGrow(this)"></textarea></td><td><textarea rows="2" placeholder="الفئة المستهدفة..." oninput="autoGrow(this)"></textarea></td><td><textarea rows="2" placeholder="مدة التدريب..." oninput="autoGrow(this)"></textarea></td><td><textarea rows="2" placeholder="كيفية التدريب..." oninput="autoGrow(this)"></textarea></td><td><textarea rows="2" placeholder="مخرجات التدريب..." oninput="autoGrow(this)"></textarea></td><td class="remove-cell"><button class="remove-btn" onclick="removeJourneyRow(this)">✕</button></td></tr>`;
-  document.querySelectorAll('textarea').forEach(autoGrow);
+  document.getElementById('coursesList').innerHTML = `<li class="chip"><span class="dot"></span><textarea rows="3" maxlength="400" placeholder="اكتب اسم الدورة هنا..." oninput="updateCounter(this)"></textarea><button class="remove-btn" onclick="removeChip(this)">✕</button><div class="char-counter">0 / 400</div></li>`;
+  document.getElementById('achievementsList').innerHTML = `<li class="chip"><span class="dot"></span><textarea rows="3" maxlength="400" placeholder="اكتب الإنجاز / النشاط / المسابقة هنا..." oninput="updateCounter(this)"></textarea><button class="remove-btn" onclick="removeChip(this)">✕</button><div class="char-counter">0 / 400</div></li>`;
+
+  let journeyHTML = '';
+  for(let i = 1; i <= 5; i++){
+    journeyHTML += `<tr>
+      <td class="row-num">${i}</td>
+      <td><textarea rows="2" placeholder="عنوان التدريب..." oninput="autoGrow(this)"></textarea></td>
+      <td><textarea rows="2" placeholder="الهدف منه..." oninput="autoGrow(this)"></textarea></td>
+      <td><textarea rows="2" placeholder="الفئة المستهدفة..." oninput="autoGrow(this)"></textarea></td>
+      <td><textarea rows="2" placeholder="مدة التدريب..." oninput="autoGrow(this)"></textarea></td>
+      <td><textarea rows="2" placeholder="كيفية التدريب..." oninput="autoGrow(this)"></textarea></td>
+      <td><textarea rows="2" placeholder="مخرجات التدريب..." oninput="autoGrow(this)"></textarea></td>
+    </tr>`;
+  }
+  document.getElementById('journeyBody').innerHTML = journeyHTML;
 }
 
 /* ============ Clear Data ============ */
 function clearData(){document.getElementById('confirmOverlay').classList.add('active');}
 document.getElementById('confirmYes').addEventListener('click',()=>{
   document.getElementById('confirmOverlay').classList.remove('active');
-  resetFormUI();showToast('تم مسح كل البيانات ✅');
+  resetFormUI(); showToast('تم مسح كل البيانات ✅');
 });
 document.getElementById('confirmNo').addEventListener('click',()=>document.getElementById('confirmOverlay').classList.remove('active'));
-document.getElementById('confirmOverlay').addEventListener('click',function(e){if(e.target===this)this.classList.remove('active');});
+document.getElementById('confirmOverlay').addEventListener('click',function(e){if(e.target === this)this.classList.remove('active');});
 
 /* ============ Toast ============ */
-let toastTimer=null;
+let toastTimer = null;
 function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>t.classList.remove('show'),2400);
+  toastTimer = setTimeout(()=>t.classList.remove('show'),2400);
 }
-
-/* ============ Init ============ */
-window.onload=function(){
-  document.querySelectorAll('textarea').forEach(autoGrow);
-};
 </script>
 </body>
 </html>
